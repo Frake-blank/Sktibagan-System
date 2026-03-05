@@ -1,0 +1,52 @@
+{% extends "core/admin_base.html" %}
+
+{% block title %}Edit Resident{% endblock %}
+
+{% block content %}
+<h2>Edit Resident</h2>
+<hr>
+
+<form method="POST">
+    {% csrf_token %}
+
+ <form method="POST">
+  {% csrf_token %}
+
+  <form method="POST">
+  {% csrf_token %}
+
+  <div class="form-group mb-2">
+    <label>First Name</label>
+    <input type="text" class="form-control"
+           name="firstname"
+           value="{{ resident.firstname }}"
+           required>
+  </div>
+
+  <div class="form-group mb-2">
+    <label>Last Name</label>
+    <input type="text" class="form-control"
+           name="lastname"
+           value="{{ resident.lastname }}"
+           required>
+  </div>
+
+  <div class="form-group mb-2">
+    <label>Gender</label>
+    <select name="gender" class="form-control" required>
+      <option value="Male" {% if resident.gender == "Male" %}selected{% endif %}>Male</option>
+      <option value="Female" {% if resident.gender == "Female" %}selected{% endif %}>Female</option>
+    </select>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>Purok</label>
+    <input type="text" class="form-control"
+           name="purok"
+           value="{{ resident.purok }}"
+           required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+{% endblock %}

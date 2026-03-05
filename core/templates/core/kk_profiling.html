@@ -1,0 +1,80 @@
+{% extends "core/base.html" %}
+
+{% block title %}KK Profiling{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #142a5c 80%, #0d2175 100%) !important;
+        color: #fff;
+    }
+</style>
+
+<div class="container mt-4" style="max-width: 540px;">
+    <div class="card shadow-lg border-0 mb-4" style="border-radius: 18px; background: #f7f9fb;">
+        <div class="card-body p-4">
+
+            <h4 class="text-center mb-3">KK Profiling</h4>
+
+            <!-- MESSAGES -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- RESIDENT INFO -->
+                <div class="mb-3">
+                    <label class="form-label">First Name</label>
+                    {{ resident_form.firstname }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Last Name</label>
+                    {{ resident_form.lastname }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Birthday</label>
+                    {{ resident_form.birthday }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    {{ resident_form.gender }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Purok</label>
+                    {{ resident_form.purok }}
+                </div>
+
+                <!-- KK PROFILE -->
+                <div class="mb-3">
+                    <label class="form-label">School Status</label>
+                    {{ kk_form.school_status }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    {{ kk_form.email }}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Submit
+                </button>
+
+                <a href="{% url 'home' %}" class="btn btn-secondary btn-sm w-100 mt-2">
+                    ← Back to Home
+                </a>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

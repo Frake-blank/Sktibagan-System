@@ -1,0 +1,13 @@
+{% extends "core/admin_base.html" %}
+
+{% block content %}
+
+<h4>Delete {{ member.name }}?</h4>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'sk_members_admin' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}

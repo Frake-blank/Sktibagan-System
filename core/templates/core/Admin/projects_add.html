@@ -1,0 +1,96 @@
+{% extends "core/admin_base.html" %}
+
+
+{% block content %}
+<div class="container mt-5" style="max-width: 540px;">
+    <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; background: #1a2950; color: #fff;">
+        <div class="card-body p-4">
+            <h2 class="fw-bold mb-4 text-center" style="color:#4f8cff;">Add Project</h2>
+            <form method="post" enctype="multipart/form-data" autocomplete="off">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" placeholder="Title" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" placeholder="Description" rows="3" required></textarea>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" name="date_started" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select" required>
+                        <option value="planned">Planned</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Images</label>
+                    <input type="file" id="imagesInput" name="images" class="form-control" multiple accept="image/*">
+                    <div id="fileList" class="small text-muted mt-2"></div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg fw-semibold" style="border-radius: 10px;">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background: linear-gradient(135deg, #142a5c 80%, #0d2175 100%) !important;
+        color: #fff;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #b3c6e0;
+    }
+    .form-control, .form-select, .form-control:focus, .form-select:focus {
+        border-radius: 10px;
+        border: 1.5px solid #4f8cff;
+        box-shadow: none;
+        background: #223366;
+        color: #fff;
+    }
+    .form-control::placeholder {
+        color: #b3c6e0;
+        opacity: 1;
+    }
+    .btn-primary {
+        background: linear-gradient(90deg, #0d6efd 80%, #4f8cff 100%);
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(13,110,253,0.10);
+    }
+    .btn-primary:hover {
+        background: #0a58ca;
+    }
+</style>
+<script>
+document.getElementById('imagesInput').addEventListener('change', function () {
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = '';
+    if (this.files.length > 0) {
+        fileList.innerHTML = `<strong>${this.files.length} image(s) selected:</strong><br>`;
+        Array.from(this.files).forEach(file => {
+            fileList.innerHTML += `• ${file.name}<br>`;
+        });
+    }
+});
+</script>
+</button>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-sm mb-3">
+        ← Back to Dashboard
+    </a>
+
+        </button>
+{% endblock %}

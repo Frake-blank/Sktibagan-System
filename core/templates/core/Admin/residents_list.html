@@ -1,0 +1,50 @@
+{% extends "core/admin_base.html" %}
+
+{% block title %}Residents{% endblock %}
+
+{% block content %}
+<h2>Residents</h2>
+<hr>
+
+<table class="table table-striped align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Full Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Purok</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for resident in residents %}
+        <tr>
+            <td>{{ resident.firstname }} {{ resident.lastname }}</td>
+            <td>{{ resident.age }}</td>
+            <td>{{ resident.gender }}</td>
+            <td>{{ resident.purok }}</td>
+            <td class="text-center">
+                {% if perms.core.change_resident %}
+                    <a href="{% url 'residents_edit' resident.id %}"
+                       class="btn btn-sm btn-warning">
+                        ✏️ Edit
+                    </a>
+                {% endif %}
+                {% if perms.core.delete_resident %}
+                    <a href="{% url 'residents_delete' resident.id %}"
+                       class="btn btn-sm btn-danger">
+                        🗑 Delete
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center text-muted">
+                No residents found.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

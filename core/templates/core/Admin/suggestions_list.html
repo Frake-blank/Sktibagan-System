@@ -1,0 +1,38 @@
+{% extends "core/admin_base.html" %}
+{% block content %}
+
+<h4 class="mb-3">📬 Feedback & Suggestions</h4>
+
+<div class="list-group shadow-sm">
+
+{% for s in suggestions %}
+<a href="{% url 'suggestion_detail' s.id %}"
+   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center
+   {% if s.status == 'new' %}fw-bold bg-light{% endif %}">
+
+    <div class="text-truncate" style="max-width:75%;">
+        {% if s.is_important %}⭐{% endif %}
+        {{ s.user.username }} — {{ s.message|truncatechars:60 }}
+
+        {% if s.status == 'resolved' %}
+            <span class="badge bg-success ms-2">Resolved</span>
+        {% elif s.status == 'read' %}
+            <span class="badge bg-secondary ms-2">Read</span>
+        {% else %}
+            <span class="badge bg-primary ms-2">New</span>
+        {% endif %}
+    </div>
+
+    <small class="text-muted">
+        {{ s.created_at|date:"M d, Y H:i" }}
+    </small>
+</a>
+{% empty %}
+<div class="text-center text-muted p-4">
+    No feedback or suggestions yet.
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}

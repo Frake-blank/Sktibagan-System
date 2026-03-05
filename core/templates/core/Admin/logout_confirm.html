@@ -1,0 +1,20 @@
+{% extends "core/admin_base.html" %}
+
+{% block title %}Admin Logout{% endblock %}
+{% block header %}Confirm Logout{% endblock %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 420px;">
+  <div class="card-body text-center">
+    <h5 class="mb-3">Are you sure you want to log out?</h5>
+
+    <a href="{% url 'admin_logout' %}" class="btn btn-danger me-2">
+      Yes, Logout
+    </a>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+      Cancel
+    </a>
+  </div>
+</div>
+{% endblock %}

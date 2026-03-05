@@ -1,0 +1,62 @@
+{% extends "core/admin_base.html" %}
+{% block content %}
+
+<a href="{% url 'suggestions_admin' %}" class="btn btn-sm btn-secondary mb-3">
+    ← Back to Inbox
+</a>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <h5 class="mb-1">
+            {% if suggestion.is_important %}⭐{% endif %}
+            From: {{ suggestion.user.username }}
+        </h5>
+
+        <small class="text-muted d-block mb-2">
+            {{ suggestion.created_at|date:"M d, Y H:i" }}
+        </small>
+
+        <!-- STATUS BADGE -->
+        <div class="mb-3">
+            {% if suggestion.status == "new" %}
+                <span class="badge bg-primary">New</span>
+            {% elif suggestion.status == "read" %}
+                <span class="badge bg-secondary">Read</span>
+            {% elif suggestion.status == "resolved" %}
+                <span class="badge bg-success">Resolved</span>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <p style="white-space: pre-line;">
+            {{ suggestion.message }}
+        </p>
+
+        <div class="mt-3 d-flex gap-2">
+
+            <form method="post" action="{% url 'suggestion_important' suggestion.id %}">
+                {% csrf_token %}
+                <button class="btn btn-warning btn-sm">
+                    {% if suggestion.is_important %}
+                        Unmark Important
+                    {% else %}
+                        Mark Important
+                    {% endif %}
+                </button>
+            </form>
+
+            <form method="post" action="{% url 'suggestion_delete' suggestion.id %}">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-sm">
+                    Delete
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

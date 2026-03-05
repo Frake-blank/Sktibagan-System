@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Admin | SK Tibagan{% endblock %}</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Admin CSS -->
+  <link rel="stylesheet" href="{% static 'core/admin.css' %}">
+</head>
+
+<body class="admin-body">
+  <div class="admin-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar d-flex flex-column">
+
+      <!-- BRAND -->
+      <div class="sidebar-brand p-3 text-center">
+        <img
+          src="{% static 'core/images/logo.png' %}"
+          alt="SK Tibagan Logo"
+          width="70"
+          class="mb-2"
+        >
+        <h6 class="mb-0 fw-bold">SK Tibagan</h6>
+        <small class="opacity-75">Admin Panel</small>
+      </div>
+
+      <!-- NAV -->
+      <ul class="nav flex-column px-2 mt-3">
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+             href="{% url 'dashboard' %}">
+            📊 Dashboard
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'residents_list' %}active{% endif %}"
+             href="{% url 'residents_list' %}">
+            👥 Manage Residents
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'projects_list' %}active{% endif %}"
+             href="{% url 'projects_list' %}">
+            📁 Manage Projects
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'kk_profiles_list' %}active{% endif %}"
+             href="{% url 'kk_profiles_list' %}">
+            📝 KK Profiling
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'sk_members_admin' %}active{% endif %}"
+             href="{% url 'sk_members_admin' %}">
+            🧑‍💼 SK Members
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'suggestions_admin' %}active{% endif %}"
+             href="{% url 'suggestions_admin' %}">
+            📨 Suggestions
+          </a>
+        </li>
+
+      </ul>
+
+      <!-- FOOTER -->
+      <div class="sidebar-footer mt-auto p-3 text-center">
+        <small class="opacity-75">
+          Logged in as<br>
+          <strong>{{ request.user.get_username }}</strong>
+        </small>
+      </div>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="content">
+
+      <!-- TOP BAR -->
+      <div class="admin-topbar d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">{% block header %}Admin Dashboard{% endblock %}</h4>
+
+        <div class="d-flex gap-2">
+          <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm">
+            View Site
+          </a>
+
+          <!-- ✅ Logout goes to confirmation UI -->
+       <a href="{% url 'admin_logout_confirm' %}" class="btn btn-outline-danger btn-sm">
+    Logout
+</a>
+
+
+        </div>
+      </div>
+
+      <!-- PAGE CONTENT -->
+      {% block content %}{% endblock %}
+
+    </main>
+
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- PAGE-SPECIFIC JS -->
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>

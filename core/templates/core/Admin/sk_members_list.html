@@ -1,0 +1,65 @@
+{% extends "core/admin_base.html" %}
+
+{% block content %}
+
+<h3 class="mb-3">SK Members</h3>
+
+<a href="{% url 'sk_member_add' %}" class="btn btn-primary mb-3">
+    ➕ Add SK Member
+</a>
+
+<table class="table table-bordered align-middle">
+    <thead class="table-light">
+        <tr>
+            <th style="width: 80px;">Photo</th>
+            <th>Name</th>
+            <th style="width: 160px;">Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for m in members %}
+        <tr>
+            <td class="text-center">
+                {% if m.photo %}
+                    <img src="{{ m.photo.url }}"
+                         width="60"
+                         height="60"
+                         style="object-fit: cover; border-radius: 50%;">
+                {% else %}
+                    <span class="text-muted">—</span>
+                {% endif %}
+            </td>
+
+            <td>{{ m.name }}</td>
+
+            <td>
+                <a href="{% url 'sk_member_edit' m.id %}"
+                   class="btn btn-sm btn-warning">
+                    Edit
+                </a>
+
+                <a href="{% url 'sk_member_delete' m.id %}"
+                   class="btn btn-sm btn-danger">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="text-center text-muted">
+                No SK members added yet.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</button>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-sm mb-3">
+        ← Back to Dashboard
+    </a>
+
+        </button>
+{% endblock %}

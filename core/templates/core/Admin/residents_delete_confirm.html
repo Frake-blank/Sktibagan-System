@@ -1,0 +1,17 @@
+{% extends "core/admin_base.html" %}
+
+
+{% block title %}Delete Resident | SK Tibagan{% endblock %}
+
+{% block content %}
+<h2>Are you sure you want to delete this resident?</h2>
+<p>Name: {{ resident.name }}</p>
+<p>Age: {{ resident.age }}</p>
+<p>Purok: {{ resident.purok }}</p>
+
+<form method="POST">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Delete Resident</button>
+  <a href="{% url 'residents_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,66 @@
+/* =========================
+   CUSTOM ADMIN DASHBOARD ONLY
+   (NOT DJANGO DEFAULT ADMIN)
+========================= */
+
+body {
+    margin: 0;
+    background: #0f1f4d;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Layout */
+.admin-layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #0d6efd, #142a5c);
+    color: #fff;
+}
+
+.sidebar .nav-link {
+    color: rgba(255,255,255,0.9);
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 2px 0;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+}
+
+/* Content */
+.content {
+    flex: 1;
+    padding: 24px;
+    background: #0f1f4d;
+}
+
+/* Cards */
+.card {
+    background: #142a5c;
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+}
+
+/* Buttons */
+.btn-outline-primary {
+    color: #fff;
+    border-color: #0d6efd;
+}
+.btn-outline-primary:hover {
+    background: #0d6efd;
+}
+
+/* Charts */
+canvas {
+    max-width: 100%;
+}

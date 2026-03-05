@@ -1,0 +1,244 @@
+{% extends "core/base.html" %}
+
+{% block title %}Projects | SK Tibagan{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(120deg, #142a5c 0%, #0d2175 100%);
+        font-family: 'Inter', system-ui;
+        color: #fff;
+    }
+
+    h2.section-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #4f8cff;
+    }
+
+    .section-desc {
+        color: #b3c6e0;
+        margin-bottom: 2rem;
+    }
+
+    .project-card {
+        border-radius: 22px;
+        border-left: 7px solid #4f8cff;
+        background: #1a2950;
+        color: #fff;
+        box-shadow: 0 4px 24px rgba(13,110,253,.08), 0 2px 6px rgba(0,0,0,.05);
+        transition: transform .15s, box-shadow .15s;
+    }
+
+    .project-card:hover {
+        transform: translateY(-3px);
+        border-left-color: #00b894;
+        background: #223366;
+    }
+
+    .project-img {
+        object-fit: cover;
+        height: 100%;
+        min-height: 220px;
+        border-radius: 18px 0 0 18px;
+    }
+
+    .project-status {
+        background: linear-gradient(90deg, #fdcb6e, #e17055);
+        color: #222;
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 6px 14px;
+    }
+
+    .react-btn {
+        border-radius: 50px;
+        font-weight: 600;
+        background: #223366;
+        color: #fff;
+        border: 1.5px solid #4f8cff;
+    }
+    .react-btn:hover {
+        background: #4f8cff;
+        color: #fff;
+    }
+
+    .image-counter {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: rgba(0,0,0,.7);
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        z-index: 10;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="section-title">SK Projects</h2>
+<p class="section-desc">Official projects of SK Tibagan</p>
+
+{% for project in projects %}
+<div class="card project-card mb-4">
+    <div class="row g-0 {% if forloop.counter|divisibleby:2 %}flex-md-row-reverse{% endif %}">
+
+        <!-- IMAGE -->
+        <div class="col-md-4">
+            {% with imgs=project.images.all %}
+            {% if imgs %}
+            <img src="{{ imgs.0.image.url }}"
+                 class="img-fluid w-100 project-img"
+                 data-bs-toggle="modal"
+                 data-bs-target="#galleryModal{{ project.id }}"
+                 style="cursor:pointer;">
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-md-8">
+            <div class="card-body d-flex flex-column h-100">
+
+                <h4 class="fw-bold">{{ project.title }}</h4>
+
+                {% if project.date_started %}
+                <small class="text-muted">
+                    📅 {{ project.date_started|date:"F d, Y" }}
+                </small>
+                {% endif %}
+
+                <p class="mt-2 flex-grow-1">{{ project.description }}</p>
+
+                <span class="project-status mb-3">
+                    {{ project.get_status_display }}
+                </span>
+
+                {% if user.is_authenticated %}
+                <div>
+                    <button class="btn btn-outline-success btn-sm react-btn"
+                            data-id="{{ project.id }}" data-type="like">
+                        👍 <span id="like-count-{{ project.id }}">{{ project.like_count }}</span>
+                    </button>
+
+                    <button class="btn btn-outline-danger btn-sm react-btn"
+                            data-id="{{ project.id }}" data-type="dislike">
+                        👎 <span id="dislike-count-{{ project.id }}">{{ project.dislike_count }}</span>
+                    </button>
+                </div>
+                {% else %}
+                <small class="text-muted">Login to react</small>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="galleryModal{{ project.id }}" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark">
+
+            <div class="modal-body p-0">
+                <div id="carousel{{ project.id }}" class="carousel slide"
+                     data-bs-ride="false" data-bs-project="{{ project.id }}">
+
+                    <div class="image-counter" id="counter-{{ project.id }}">
+                        1 / {{ project.images.count }}
+                    </div>
+
+                    <div class="carousel-inner">
+                        {% for img in project.images.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{{ img.image.url }}"
+                                 class="d-block w-100"
+                                 style="max-height:90vh; object-fit:contain;">
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if project.images.count > 1 %}
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carousel{{ project.id }}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#carousel{{ project.id }}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+<div class="alert alert-warning">No projects available.</div>
+{% endfor %}
+
+<a href="{% url 'home' %}" class="btn btn-secondary btn-sm mt-3">
+    ← Back to Home
+</a>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrfToken = getCookie('csrftoken');
+
+document.querySelectorAll('.react-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        fetch(`/projects/${btn.dataset.id}/react/${btn.dataset.type}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById(`like-count-${btn.dataset.id}`).innerText = data.likes;
+            document.getElementById(`dislike-count-${btn.dataset.id}`).innerText = data.dislikes;
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+
+document.querySelectorAll('.carousel').forEach(carousel => {
+    const id = carousel.dataset.bsProject;
+    const counter = document.getElementById(`counter-${id}`);
+    const total = carousel.querySelectorAll('.carousel-item').length;
+
+    carousel.addEventListener('slid.bs.carousel', () => {
+        const index = [...carousel.querySelectorAll('.carousel-item')]
+            .findIndex(i => i.classList.contains('active')) + 1;
+        counter.innerText = `${index} / ${total}`;
+    });
+});
+</script>
+{% endblock %}
+

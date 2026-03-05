@@ -1,0 +1,64 @@
+{% extends "core/admin_base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Admin Dashboard</h2>
+<hr>
+
+<div class="row g-3">
+
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted">Total Residents</h6>
+        <h2 class="fw-bold">{{ total_residents }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted">Total Projects</h6>
+        <h2 class="fw-bold">{{ total_projects }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted">KK Profiles</h6>
+        <h2 class="fw-bold">{{ total_kk_profiles }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted">SK Members</h6>
+        <h2 class="fw-bold">{{ total_sk_members }}</h2>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<hr class="my-4">
+
+<div class="d-flex flex-wrap gap-2">
+  <a href="{% url 'reports' %}" class="btn btn-primary">
+    📄 Download Reports
+  </a>
+
+  <a href="{% url 'residents_list' %}" class="btn btn-outline-secondary">
+    👥 Manage Residents
+  </a>
+
+  <a href="{% url 'projects_list' %}" class="btn btn-outline-secondary">
+    📁 Manage Projects
+  </a>
+</div>
+{% endblock %}

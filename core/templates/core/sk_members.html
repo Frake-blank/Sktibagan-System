@@ -1,0 +1,109 @@
+{% extends "core/base.html" %}
+{% load custom_tags %}
+
+{% block title %}SK Members | SK Tibagan{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #142a5c 80%, #0d2175 100%) !important;
+        color: #fff;
+    }
+
+    .tree {
+        text-align: center;
+    }
+
+    .member-box {
+        width: 170px;
+        padding: 16px 12px;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 6px 20px rgba(13,110,253,0.12);
+        margin: auto;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .member-box:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 28px rgba(13,110,253,0.18);
+    }
+
+    .member-box img {
+        width: 95px;
+        height: 95px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 8px;
+        background: #f8f9fa;
+    }
+
+    .chairman-box img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .role-title {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #4f8cff;
+    }
+
+    .empty-slot {
+        font-size: 0.9rem;
+        color: #888;
+    }
+</style>
+
+<div class="container py-4 tree">
+
+    <!-- CHAIRMAN -->
+    <div class="mb-5">
+        <div class="role-title">SK Chairman</div>
+        {% if members.chairman %}
+            <div class="chairman-box">
+                {% include "core/sk_member_box.html" with member=members.chairman %}
+            </div>
+        {% else %}
+            <div class="empty-slot">No Chairman Assigned</div>
+        {% endif %}
+    </div>
+
+    <!-- SECRETARY -->
+    <div class="mb-5">
+        <div class="role-title">SK Secretary</div>
+        {% if members.secretary %}
+            {% include "core/sk_member_box.html" with member=members.secretary %}
+        {% else %}
+            <div class="empty-slot">No Secretary Assigned</div>
+        {% endif %}
+    </div>
+
+    <!-- KAGAWADS -->
+    <div class="row justify-content-center g-4 mt-3">
+        {% for role, label in roles %}
+            <div class="col-md-4 col-sm-6">
+                <div class="role-title">{{ label }}</div>
+
+                {% with member=members|dictget:role %}
+                    {% if member %}
+                        {% include "core/sk_member_box.html" with member=member %}
+                    {% else %}
+                        <div class="empty-slot">No Assigned Member</div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- BACK BUTTON -->
+    <div class="text-center mt-5">
+        <a href="{% url 'home' %}" class="btn btn-secondary btn-sm mb-3">
+            ← Back to Home
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

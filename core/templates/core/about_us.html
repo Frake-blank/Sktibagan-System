@@ -1,0 +1,112 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}About Us | SK Tibagan{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #0d6efd, #142a5c);
+        color: #fff;
+        padding: 60px 30px;
+        border-radius: 18px;
+        margin-bottom: 40px;
+        box-shadow: 0 6px 24px rgba(13,110,253,0.25);
+        text-align: center;
+    }
+
+    .about-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+        height: 100%;
+    }
+
+    .about-card h4 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #0d6efd;
+    }
+
+    .about-card p {
+        color: #555;
+        line-height: 1.7;
+    }
+
+    .about-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="about-hero">
+    <h1 class="fw-bold">About SK Tibagan</h1>
+    <p class="mt-3">
+        Serving the youth. Building the community. Promoting transparency.
+    </p>
+</div>
+
+<!-- ABOUT CONTENT -->
+<div class="row g-4 mb-5">
+
+    <div class="col-md-4">
+        <div class="about-card text-center">
+            <div class="about-icon">🎯</div>
+            <h4>Our Mission</h4>
+            <p>
+                To empower the youth of Barangay Tibagan through inclusive
+                programs, transparency, and community-driven initiatives.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="about-card text-center">
+            <div class="about-icon">👁️</div>
+            <h4>Our Vision</h4>
+            <p>
+                A united, active, and responsible youth community that
+                contributes to sustainable local development.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="about-card text-center">
+            <div class="about-icon">🤝</div>
+            <h4>Our Values</h4>
+            <p>
+                Transparency, leadership, service, accountability, and
+                youth participation in governance.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- HISTORY / DESCRIPTION -->
+<div class="card p-4 shadow-sm mb-4">
+    <h3 class="fw-bold mb-3">Who We Are</h3>
+    <p>
+        The Sangguniang Kabataan of Barangay Tibagan is committed to representing
+        the youth and ensuring their voices are heard. Through projects,
+        profiling, and engagement, we aim to create meaningful impact in the
+        community.
+    </p>
+    <p>
+        This website serves as a platform for transparency, updates, and
+        communication between the SK Council and the residents of Barangay
+        Tibagan.
+    </p>
+</div>
+
+
+ <a href="{% url 'home' %}" class="btn btn-secondary btn-sm mb-3">
+        ← Back to Home
+    </a>
+ {% endblock %}

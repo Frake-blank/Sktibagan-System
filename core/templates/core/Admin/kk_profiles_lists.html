@@ -1,0 +1,50 @@
+{% extends "core/admin_base.html" %}
+
+{% block content %}
+<h2>KK Profiles</h2>
+
+<a href="{% url 'kk_profiles_pdf' %}" class="btn btn-success mb-3">
+    Download PDF
+</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Purok</th>
+            <th>School Status</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for profile in profiles %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ profile.resident.full_name }}</td>
+
+            <td>{{ profile.resident.age|default:"-" }}</td>
+
+            <td>{{ profile.resident.get_gender_display|default:"-" }}</td>
+
+            <td>{{ profile.resident.purok|default:"-" }}</td>
+
+            <td>{{ profile.get_school_status_display }}</td>
+
+            <td>{{ profile.email|default:"-" }}</td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="8" class="text-center">
+                No KK profiles submitted yet.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

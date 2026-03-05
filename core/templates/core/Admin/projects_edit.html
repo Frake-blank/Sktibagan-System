@@ -1,0 +1,83 @@
+{% extends "core/admin_base.html" %}
+
+
+{% block content %}
+<div class="container mt-5" style="max-width: 540px;">
+    <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; background: #1a2950; color: #fff;">
+        <div class="card-body p-4">
+            <h2 class="fw-bold mb-4 text-center" style="color:#4f8cff;">Edit Project</h2>
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" value="{{ project.title }}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3">{{ project.description }}</textarea>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" name="start_date" value="{{ project.start_date }}" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label class="form-label">End Date</label>
+                        <input type="date" name="end_date" value="{{ project.end_date }}" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="planned" {% if project.status == "planned" %}selected{% endif %}>Planned</option>
+                        <option value="ongoing" {% if project.status == "ongoing" %}selected{% endif %}>Ongoing</option>
+                        <option value="completed" {% if project.status == "completed" %}selected{% endif %}>Completed</option>
+                    </select>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg fw-semibold" style="border-radius: 10px;">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background: linear-gradient(135deg, #142a5c 80%, #0d2175 100%) !important;
+        color: #fff;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #b3c6e0;
+    }
+    .form-control, .form-select, .form-control:focus, .form-select:focus {
+        border-radius: 10px;
+        border: 1.5px solid #4f8cff;
+        box-shadow: none;
+        background: #223366;
+        color: #fff;
+    }
+    .form-control::placeholder {
+        color: #b3c6e0;
+        opacity: 1;
+    }
+    .btn-primary {
+        background: linear-gradient(90deg, #0d6efd 80%, #4f8cff 100%);
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(13,110,253,0.10);
+    }
+    .btn-primary:hover {
+        background: #0a58ca;
+    }
+</style>
+</button>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-sm mb-3">
+        ← Back to Dashboard
+    </a>
+
+        </button>
+{% endblock %}

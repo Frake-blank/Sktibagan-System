@@ -1,0 +1,40 @@
+{% if user.is_superuser %}
+<a href="{% if member %}{% url 'sk_member_edit' member.id %}{% else %}{% url 'sk_member_add' %}{% endif %}"
+   class="member-link text-decoration-none text-dark">
+{% endif %}
+
+<div class="text-center">
+
+    <!-- PHOTO BOX -->
+    <div class="member-box p-2 border rounded mx-auto">
+        {% if member and member.photo %}
+            <img src="{{ member.photo.url }}"
+                 width="90" height="90"
+                 style="object-fit: cover; border-radius: 50%;">
+        {% else %}
+            <img src="https://via.placeholder.com/90"
+                 width="90" height="90"
+                 style="border-radius: 50%;">
+        {% endif %}
+    </div>
+
+    <!-- NAME OUTSIDE BOX -->
+    <div class="fw-semibold mt-2 text-white">
+        {% if member %}
+            {{ member.name }}
+        {% else %}
+            Vacant
+        {% endif %}
+    </div>
+
+    {% if user.is_superuser %}
+        <small class="text-light d-block">
+            {% if member %}Click to edit{% else %}Click to add{% endif %}
+        </small>
+    {% endif %}
+
+</div>
+
+{% if user.is_superuser %}
+</a>
+{% endif %}
